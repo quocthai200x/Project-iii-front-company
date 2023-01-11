@@ -17,13 +17,18 @@ import { roleDictionary } from "./assets/dictionary/role"
 import { useUserStore } from "./stores/userStore"
 import { useRoleStore } from "./stores/roleStore"
 import { useCompanyStore } from "./stores/companyStore"
+import { useJobStore } from "./stores/jobStore"
 
 export default {
   name: "App",
   data() {
     return {
       canLoadComponent: false,
-      layout: 'div', userStore: useUserStore(), companyStore: useCompanyStore(), roleStore: useRoleStore(),
+      layout: 'div', 
+      userStore: useUserStore(), 
+      companyStore: useCompanyStore(), 
+      roleStore: useRoleStore(),
+      jobStore: useJobStore(),
     }
   },
   async created() {
@@ -37,8 +42,8 @@ export default {
         let { email, _id, info, activity, roleNumber, createdAt, updatedAt, } = data.user;
         if (data && (roleDictionary.isAdmin(roleNumber) || roleDictionary.isEmployee(roleNumber))) {
           this.userStore.setState({ email, _id, info, activity, roleNumber, createdAt, updatedAt })
-          this.companyStore.setState(data.user.companyId)
-
+          this.companyStore.setState(data.user.companyId);
+          this.jobStore.form.benefits = data.user.companyId.info.benefits;
           if (roleDictionary.isAdmin(roleNumber)) {
             this.roleStore.setAdminRole()
           } else if (roleDictionary.isEmployee(roleNumber)) {

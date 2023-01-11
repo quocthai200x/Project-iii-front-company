@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import './style.scss'
 import App from './App.vue'
-import { Quasar, Notify } from 'quasar'
+import { Quasar, Notify ,Loading} from 'quasar'
 import moment from 'moment';
 // import VueMoment from 'vue-moment';
 import VueGoogleMaps from '@fawmi/vue-google-maps'
@@ -11,6 +11,7 @@ import { createPinia } from "pinia";
 // Import Quasar css
 import 'quasar/src/css/index.sass'
 import router from "./router"
+import langVi from 'quasar/lang/vi'
 
 
 
@@ -24,6 +25,9 @@ myApp.use(VueGoogleMaps, {
     }},)
 // myApp.use(VueMoment, { moment });
 myApp.use(createPinia());
-myApp.use(Quasar,{plugins: {Notify}})
+myApp.use(Quasar,{
+    plugins: {Notify, Loading},
+    lang: langVi
+})
 myApp.use(router)
 myApp.mount('#app')

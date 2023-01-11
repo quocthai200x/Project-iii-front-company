@@ -156,22 +156,22 @@ export default {
           icon: `person`,
           label: 'Hồ sơ doanh nghiệp',
           separator: false,
-          link: "/company-profile",
+          link: "/company/profile",
           name: "Company Profile"
         },
         {
           icon: `send`,
           label: 'Tạo công việc',
           separator: false,
-          link: "/",
+          link: "/job/new",
           name: "Job Create"
         },
         {
           icon: `work`,
           label: 'Quản lí tìm việc',
           separator: false,
-          link: "/",
-          name: "Job Create"
+          link: "/search-candidate",
+          name: "Search Candidate"
         },
       ]
 

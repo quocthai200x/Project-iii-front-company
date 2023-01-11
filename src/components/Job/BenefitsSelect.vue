@@ -4,7 +4,7 @@
         <div class="text-bold text-capitalize q-mb-sm">Phúc lợi từ công ty <strong class="text-negative">*</strong>
         </div>
         <div class="row q-gutter-xs">
-            <div v-for="(benefit, index) in companyStore.info.benefits" :key="'benefits-' + index">
+            <div v-for="(benefit, index) in jobStore.form.benefits" :key="'benefits-' + index">
                 <div class="rounded-borders visible-child q-pa-md relative-position"
                     :class="'bg-' + colorPallateForBenefits[index % colorPallateForBenefits.length]">
                     <div class="text-center  q-gutter-md 	">
@@ -90,9 +90,11 @@
 <script>
 
 import { useQuasar } from 'quasar'
-import { jobDictionary } from '../assets/dictionary/job';
-import { useCompanyStore } from '../stores/companyStore';
-import { iconDictionary } from "../assets/dictionary/icon"
+import { jobDictionary } from '../../assets/dictionary/job';
+
+import { useCompanyStore } from '../../stores/companyStore';
+import { iconDictionary } from "../../assets/dictionary/icon"
+import { useJobStore } from '../../stores/jobStore';
 export default {
     data() {
         return {
@@ -106,6 +108,7 @@ export default {
             chooseIndex: -1,
             isShowDialog: false,
             companyStore: useCompanyStore(),
+            jobStore: useJobStore(),
             colorPallateForBenefits: [
                 "pink-2",
                 "deep-purple-2",
@@ -139,10 +142,10 @@ export default {
             }
             if(this.chooseIndex>=0){
                 // tức edit
-                this.companyStore.info.benefits[this.chooseIndex] = newData
+                this.jobStore.form.benefits[this.chooseIndex] = newData
             }else{
                 // là new
-                this.companyStore.info.benefits.push(newData)
+                this.jobStore.form.benefits.push(newData)
             }
             this.resetBenefitData();
             this.isShowDialog = false;   
@@ -153,22 +156,22 @@ export default {
             this.isShowDialog = true
             this.chooseIndex = index
             const isChoosenIcon = (element) => (
-                element.svg == this.companyStore.info.benefits[index].svg 
-                &&element.label==this.companyStore.info.benefits[index].label 
+                element.svg == this.jobStore.form.benefits[index].svg 
+                &&element.label==this.jobStore.form.benefits[index].label 
                 )      
             
             this.chooseIconIndex = this.iconsData.findIndex(isChoosenIcon)
            
             let newData = {
-                label: this.companyStore.info.benefits[index].label,
-                desc: this.companyStore.info.benefits[index].desc,
-                svg: this.companyStore.info.benefits[index].svg
+                label: this.jobStore.form.benefits[index].label,
+                desc: this.jobStore.form.benefits[index].desc,
+                svg: this.jobStore.form.benefits[index].svg
             }
             this.benefitDialogData = newData;
         },
         deleteBenefit(index){
             // xóa khỏi store luôn
-             this.companyStore.info.benefits.splice(index,1)
+             this.jobStore.form.benefits.splice(index,1)
             
         },
         resetBenefitData(){

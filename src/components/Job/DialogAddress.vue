@@ -41,12 +41,8 @@
                 <div class="row justify-between items-center">
                     <div class="text-bold text-capitalize">Chọn vị trí bản đồ</div>
                     <div class="row items-center">
-                        <div><i>
-                                Trụ sở chính
-                            </i>
-                        </div>
-                        <q-toggle :disable="companyStore.info.location.length == 0 && isHeadquarter"
-                            v-model="isHeadquarter" color="red" />
+
+
                     </div>
                 </div>
                 <GMapMap :center="{ lat: latitude, lng: longitude }" :zoom="16" map-style-id="terrain"
@@ -74,8 +70,10 @@ import { ref } from 'vue'
 import { useQuasar } from "quasar"
 
 import { locationDictionary } from "@/assets/dictionary/location"
-import { useCompanyStore } from '../stores/companyStore'
-import { useRoleStore } from '../stores/roleStore'
+
+import { useRoleStore } from '../../stores/roleStore'
+import { useJobStore } from '../../stores/jobStore'
+
 
 export default {
     props: {
@@ -86,7 +84,7 @@ export default {
 
     data() {
         return {
-
+            jobStore: useJobStore(),
             $q: useQuasar(),
             mapOptions: {
                 disableDefaultUI: true,
@@ -97,10 +95,10 @@ export default {
             ward: "",
             district: "",
             province: "",
-            isHeadquarter: false,
+
             latitude: 21.02839897378743,
             longitude: 105.85258311027324,
-            companyStore: useCompanyStore(),
+
             roleStore: useRoleStore(),
             optionProvince: [],
             optionDistrict: [],
@@ -117,20 +115,18 @@ export default {
     watch: {
         "isShowAddAddress"(newValue) {
             this.isShow = newValue
-            if (this.companyStore.info.location.length == 0) {
-                this.isHeadquarter = true;
-            }
+
         },
         "isShowEditAddress"(newValue) {
             this.isShow = newValue
             if (newValue) {
-                this.province = this.companyStore.info.location[this.indexToDialog].province;
-                this.district = this.companyStore.info.location[this.indexToDialog].district;
-                this.ward = this.companyStore.info.location[this.indexToDialog].ward;
-                this.address = this.companyStore.info.location[this.indexToDialog].address;
-                this.latitude = this.companyStore.info.location[this.indexToDialog].latitude;
-                this.longitude = this.companyStore.info.location[this.indexToDialog].longitude;
-                this.isHeadquarter = this.companyStore.info.location[this.indexToDialog].isHeadquarter
+                this.province = this.jobStore.form.workingAddress[this.indexToDialog].province;
+                this.district = this.jobStore.form.workingAddress[this.indexToDialog].district;
+                this.ward = this.jobStore.form.workingAddress[this.indexToDialog].ward;
+                this.address = this.jobStore.form.workingAddress[this.indexToDialog].address;
+                this.latitude = this.jobStore.form.workingAddress[this.indexToDialog].latitude;
+                this.longitude = this.jobStore.form.workingAddress[this.indexToDialog].longitude;
+
 
             }
         },
@@ -151,17 +147,7 @@ export default {
 
     },
     methods: {
-        //detects location from browser
-        // geolocate() {
-        //     navigator.geolocation.getCurrentPosition((position) => {
-        //         this.marker.position = {
-        //             lat: position.coords.latitude,
-        //             lng: position.coords.longitude,
-        //         };
-        //         this.panToMarker();
-        //     });
-        // },
-        //sets the position of marker when dragged
+
         handleMarkerDrag(e) {
             this.latitude = e.latLng.lat();
             this.longitude = e.latLng.lng();
@@ -171,7 +157,7 @@ export default {
             this.$refs.mapRef.panTo({ lat: this.langitude, lng: this.longitude });
             this.$refs.mapRef.setZoom(18);
         },
-        //Moves the marker to click position on the map
+
         handleMapClick(e) {
             this.latitude = e.latLng.lat();
             this.longitude = e.latLng.lng();
@@ -188,7 +174,7 @@ export default {
             // BALBLA
             if (this.isShow && this.address && this.district && this.ward && this.province) {
                 let objectLocation = {
-                    isHeadquarter: this.isHeadquarter,
+
                     address: this.address,
                     district: this.district,
                     ward: this.ward,
@@ -196,10 +182,8 @@ export default {
                     latitude: this.latitude,
                     longitude: this.longitude,
                 }
-                if (this.isHeadquarter) {
-                    this.companyStore.info.location[0].isHeadquarter = false;
-                }
-                this.companyStore.info.location.unshift(objectLocation)
+
+                this.jobStore.form.workingAddress.unshift(objectLocation)
                 this.resetData();
                 this.$emit('update:isShowAddAddress', false)
             } else {
@@ -214,7 +198,7 @@ export default {
         editAddress() {
             if (this.isShow && this.address && this.district && this.ward && this.province) {
                 let objectLocation = {
-                    isHeadquarter: this.isHeadquarter,
+
                     address: this.address,
                     district: this.district,
                     ward: this.ward,
@@ -222,30 +206,14 @@ export default {
                     latitude: this.latitude,
                     longitude: this.longitude,
                 }
-                
-                if (this.isHeadquarter) {
-                    this.companyStore.info.location[0].isHeadquarter = false;
-                    this.companyStore.info.location.splice(this.indexToDialog, 1);
-                    this.companyStore.info.location.unshift(objectLocation)
-                    this.resetData();
-                    this.$emit('update:isShowEditAddress', false)
-                } else {
-                  
-                    if (this.companyStore.info.location[this.indexToDialog].isHeadquarter) {
-                        this.$q.notify({
-                            message: 'Bắt buộc phải có ít nhất 1 trụ sở',
-                            color: 'deep-orange-6',
-                            position: "bottom-right",
-                            icon: 'check_circle',
-                        })
-                        this.isHeadquarter = true
-                       
-                    } else {
-                        this.companyStore.info.location[this.indexToDialog] = objectLocation
-                        this.resetData();
-                        this.$emit('update:isShowEditAddress', false)
-                    }
-                }
+
+
+
+                this.jobStore.form.workingAddress.splice(this.indexToDialog, 1);
+                this.jobStore.form.workingAddress.unshift(objectLocation)
+                this.resetData();
+                this.$emit('update:isShowEditAddress', false)
+
                 // to do
 
 
@@ -266,7 +234,7 @@ export default {
             this.province = "";
             this.latitude = 21.02839897378743;
             this.longitude = 105.85258311027324;
-            this.isHeadquarter = false;
+
         },
         getOptionDistrict() {
             if (this.province) {

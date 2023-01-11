@@ -38,8 +38,8 @@
 
 
 import { useQuasar } from 'quasar'
-import { jobDictionary } from '../assets/dictionary/job';
-import { useCompanyStore } from '../stores/companyStore';
+import { jobDictionary } from '../../assets/dictionary/job';
+import { useJobStore } from '../../stores/jobStore';
 
 export default {
     data() {
@@ -49,7 +49,7 @@ export default {
             typeWorkings: [],
             typeWorking: [],
             initOptionWorkings: [],
-            companyStore: useCompanyStore()
+            jobStore: useJobStore()
         }
     },
 
@@ -61,7 +61,7 @@ export default {
     methods: {
         remove(index) {
             this.typeWorkings.splice(index, 1)
-            this.companyStore.info.workingArea = this.typeWorkings.map(element => {
+            this.jobStore.form.type = this.typeWorkings.map(element => {
                 let field_working = element.value.split('---');
                 return ({
                     field: field_working[0],
@@ -95,7 +95,7 @@ export default {
                 })
             })
             // console.log(this.userStore.getUserState.info.typeWorking)
-            this.typeWorkings = this.companyStore.info.workingArea.map(item => {
+            this.typeWorkings = this.jobStore.form.type.map(item => {
                 let newItem = {
                     value: item.field + "---" + item.name,
                     label: item.name,
@@ -122,7 +122,7 @@ export default {
             if (this.typeWorking.length > 0) {
 
                 // lấy của user ra đã
-                this.companyStore.info.workingArea.forEach(everyType => {
+                this.jobStore.form.type.forEach(everyType => {
                     // check vòng for trùng lặp giá trị
                     this.typeWorking = this.typeWorking.filter(type => {
                         return (type.label !== everyType.name)
@@ -145,7 +145,7 @@ export default {
                             name: field_working[1],
                         })
                     })
-                    this.companyStore.info.workingArea = this.companyStore.info.workingArea.concat(arr)
+                    this.jobStore.form.type = this.jobStore.form.type.concat(arr)
                     this.typeWorkings = this.typeWorkings.concat(this.typeWorking.map(item => {
                         let newItem = {
                             value: item.value,
@@ -159,6 +159,7 @@ export default {
 
                 }
                 // chuyển đổi lại dạng
+                console.log(this.jobStore.form.type)
 
             } else {
 

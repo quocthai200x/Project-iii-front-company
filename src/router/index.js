@@ -14,10 +14,16 @@ const routes = [
         component: () => import('../views/Auth/SignIn.vue')
     },
     {
-        path: '/company-profile',
+        path: '/company/profile',
         name: "Company Profile",
         component: () => import('../views/Company/CompanyProfile.vue')
     },
+    {
+        path: '/job/new',
+        name: "Job Create",
+        component: () => import('../views/Job/JobCreatePage.vue')
+    },
+   
 
 ]
 
