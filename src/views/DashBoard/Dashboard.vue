@@ -116,24 +116,24 @@ export default {
                 draft: {
                     value: 0,
                     name: "Nháp",
-                    link: "/a"
+                    link: "/job/management/draft"
                 },
                 expiredIn7days: {
                     value: 0,
                     name: "Hết hạn trong 7 ngày",
-                    link: "/b"
+                    link: "/job/management/expire"
 
                 },
                 hidden: {
                     value: 0,
                     name: "Ẩn",
-                    link: "/c"
+                    link: "/job/management/hidden"
 
                 },
                 show: {
                     value: 0,
                     name: "Đang hiển thị",
-                    link: "/d"
+                    link: "/job/management/show"
 
                 },
             },

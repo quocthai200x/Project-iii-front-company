@@ -72,7 +72,7 @@
 </template>
 <script>
 import { useJobStore } from '../../stores/jobStore'
-useJobStore
+
 
 export default {
     data() {

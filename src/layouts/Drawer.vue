@@ -42,7 +42,7 @@
 
         <template v-for="(menuItem, index) in menuList" :key="'something'+index">
           <q-item @click="navigate(menuItem.link)" clickable active-class="text-negative active-class-drawer"
-            :active="menuItem.name == link" v-ripple>
+            :active="link.includes(menuItem.name)" v-ripple>
             <q-item-section>
               <div class="row q-gutter-sm items-center">
 
@@ -168,10 +168,10 @@ export default {
         },
         {
           icon: `work`,
-          label: 'Quản lí tìm việc',
+          label: 'Quản lí công việc',
           separator: false,
-          link: "/search-candidate",
-          name: "Search Candidate"
+          link: "/job/management/show",
+          name: "Job Management"
         },
       ]
 

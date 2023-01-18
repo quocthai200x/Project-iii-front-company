@@ -14,6 +14,20 @@ export const getCountJobByStatus = async () =>{
     }
 }
 
+export const getJobByStatus = async ({status}) =>{
+    try {
+        let res= await axios.get(`/job/status/${status}`)
+        if(res.status == 200){
+            return res.data
+        }else{
+            throw new Error(res.data)
+        }
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
 
 export const getUserFavorite = async () =>{
     try {

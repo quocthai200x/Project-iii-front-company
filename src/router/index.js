@@ -23,6 +23,33 @@ const routes = [
         name: "Job Create",
         component: () => import('../views/Job/JobCreatePage.vue')
     },
+    {
+        path: '/job/management',
+        name: "Job Management",
+        component: () => import('../views/Job/JobManagement/Layout.vue'),
+        children:[
+          {
+            path: "show",
+            name: "Job Management Show",
+            component: ()=> import("../views/Job/JobManagement/Show.vue")
+          },
+          {
+            path: "hidden",
+            name: "Job Management Hidden",
+            component: ()=> import("../views/Job/JobManagement/Hidden.vue")
+          },
+          {
+            path: "expire",
+            name: "Job Management Expire",
+            component: ()=> import("../views/Job/JobManagement/Expire.vue")
+          },
+          {
+            path: "draft",
+            name: "Job Management Draft",
+            component: ()=> import("../views/Job/JobManagement/Draft.vue")
+          },
+        ]
+    },
    
 
 ]
