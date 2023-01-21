@@ -22,17 +22,19 @@
                 <template v-slot:body="props">
                     <q-tr :props="props">
                         <q-td key="name" :props="props">
-
-                            <router-link to="/">
-                                <span class="cursor-pointer text-bold hover-text">
+                            <span class=" text-bold hover-text">
                                     {{ props.row.info.name }}
                                 </span>
-                            </router-link>
 
                         </q-td>
                         <q-td key="location" :props="props">
                             {{
                                 props.row.info.workingAddress.map(element => (element.province)).join(", ")
+                            }}
+                        </q-td>
+                        <q-td key="outdate" :props="props">
+                            {{
+                             $moment((props.row.info.outdate)).format("DD-MM-YYYY") 
                             }}
                         </q-td>
                         <q-td key="button-edit" :props="props">
@@ -43,11 +45,11 @@
                                     <q-tooltip anchor="center middle" self="center middle">Chỉnh
                                         sửa</q-tooltip>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <q-btn @click="removeJob(props.row._id)" size="sm" color="deep-orange-6"
                                         icon="backspace" dense unelevated></q-btn>
-                                    <q-tooltip anchor="center middle" self="center middle">Xóa </q-tooltip>
-                                </div>
+                                    <q-tooltip anchor="center middle" self="center middle">Ẩn </q-tooltip>
+                                </div> -->
                             </div>
                         </q-td>
 
@@ -110,6 +112,15 @@ export default {
                         return arr.join(", ")
                     }
                 },
+                sortable: true
+            },
+            {
+                name: 'outdate',
+                required: true,
+                label: 'Ngày hết hạn',
+                align: 'left',
+                field: row => row.info.outdate,
+                format: val => `${val} + 1`,
                 sortable: true
             },
             {

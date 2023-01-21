@@ -25,7 +25,8 @@ export const useJobStore = defineStore("job", {
                 outdate:"",
                 recruitmentProcess: []
 
-            }
+            },
+            
 
         }
     },

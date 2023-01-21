@@ -23,7 +23,7 @@
                     <q-tr :props="props">
                         <q-td key="name" :props="props">
 
-                            <router-link to="/">
+                            <router-link :to="`/application/management?job=${props.row.info.name}`">
                                 <span class="cursor-pointer text-bold hover-text">
                                     {{ props.row.info.name }}
                                 </span>
@@ -35,6 +35,11 @@
                                 props.row.info.workingAddress.map(element => (element.province)).join(", ")
                             }}
                         </q-td>
+                        <q-td key="outdate" :props="props">
+                            {{
+                             $moment((props.row.info.outdate)).format("DD-MM-YYYY") 
+                            }}
+                        </q-td>
                         <q-td key="button-edit" :props="props">
                             <div class=" q-gutter-md justify-center row">
                                 <div>
@@ -43,11 +48,22 @@
                                     <q-tooltip anchor="center middle" self="center middle">Chỉnh
                                         sửa</q-tooltip>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <q-btn @click="removeJob(props.row._id)" size="sm" color="deep-orange-6"
                                         icon="backspace" dense unelevated></q-btn>
                                     <q-tooltip anchor="center middle" self="center middle">Xóa </q-tooltip>
+                                </div> -->
+                                <div>
+                                    <q-btn @click="removeJob(props.row._id)" size="sm" color="grey-6"
+                                        icon="visibility_off" dense unelevated></q-btn>
+                                    <q-tooltip anchor="center middle" self="center middle">Ẩn </q-tooltip>
                                 </div>
+                                <div>
+                                    <q-btn @click="draftJob(props.row._id)" size="sm" color="lime-6"
+                                        icon="drafts" dense unelevated></q-btn>
+                                    <q-tooltip anchor="center middle" self="center middle">Nháp </q-tooltip>
+                                </div>
+
                             </div>
                         </q-td>
 
@@ -113,12 +129,19 @@ export default {
                 sortable: true
             },
             {
+                name: 'outdate',
+                required: true,
+                label: 'Ngày hết hạn',
+                align: 'left',
+                field: row => row.info.outdate,
+                format: val => `${val} + 1`,
+                sortable: true
+            },
+            {
                 label: 'Hành động',
                 name: 'button-edit',
                 required: true,
                 align: 'center',
-
-
             }
 
         ]
@@ -188,6 +211,40 @@ export default {
                 }
            
         },
+        // hiddenJob(_id){
+        //     let indexFound = this.data.findIndex(element => element._id == _id)
+        //     if (indexFound >= 0) {
+
+        //     }
+        // },
+        draftJob(_id){
+            let indexFound = this.data.findIndex(element => element._id == _id)
+            if (indexFound >= 0) {
+                let tempJob = this.data[indexFound]
+                this.data.splice(indexFound, 1)
+                // todo: đổi status thành nowhere
+                updateStatus({ jobName: tempJob.info.name, status: jobDictionary.status.draft }).then(data => {
+                    // console.log(data)
+                    if (data) {
+                        this.$q.notify({
+                            message:  `Đổi ${tempJob.info.name} - ${jobDictionary.status.draft.name} thành công`,
+                            color: 'green-6',
+                            position: "bottom-right",
+                            icon: 'check_circle',
+                        })
+                    } else {
+                        this.data.splice(indexFound, 0, tempJob)
+                        this.$q.notify({
+                            message: 'Thất bại',
+                            color: 'deep-orange-6',
+                            position: "bottom-right",
+                            icon: 'check_circle',
+                        })
+                    }
+                })
+
+            }
+        },
         removeJob(_id) {
             let indexFound = this.data.findIndex(element => element._id == _id)
             if (indexFound >= 0) {
@@ -198,7 +255,7 @@ export default {
                     // console.log(data)
                     if (data) {
                         this.$q.notify({
-                            message: 'Xóa thành công',
+                            message:  `Đổi ${tempJob.info.name} - ${jobDictionary.status.hidden.name} thành công`,
                             color: 'green-6',
                             position: "bottom-right",
                             icon: 'check_circle',
@@ -206,7 +263,7 @@ export default {
                     } else {
                         this.data.splice(indexFound, 0, tempJob)
                         this.$q.notify({
-                            message: 'Xóa thất bại',
+                            message: 'Thất bại',
                             color: 'deep-orange-6',
                             position: "bottom-right",
                             icon: 'check_circle',
@@ -239,6 +296,7 @@ export default {
 
                     this.data = data
                 }
+                console.log(this.data)
 
                 this.loadData = false
 

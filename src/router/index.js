@@ -2,6 +2,7 @@ import * as VueRouter from "vue-router"
 
 
 
+
 const routes = [
     {
         path: '/',
@@ -50,6 +51,12 @@ const routes = [
           },
         ]
     },
+    {
+      path: "/application/management",
+      name: "Application Management",
+      component: () => import("../views/Application/ApplicationManagement/ApplicationManagement.vue"),
+    },
+ 
    
 
 ]

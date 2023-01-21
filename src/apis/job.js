@@ -1,5 +1,19 @@
 import axios from "@/axios"
 
+export const getJobsNameOfCompany = async () =>{
+    try {
+        let res= await axios.get('/job/jobs-name')
+        if(res.status == 200){
+            return res.data
+        }else{
+            throw new Error(res.data)
+        }
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
 export const getCountJobByStatus = async () =>{
     try {
         let res= await axios.get('/job/status-count')

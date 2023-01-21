@@ -173,6 +173,13 @@ export default {
           link: "/job/management/show",
           name: "Job Management"
         },
+        {
+          icon: `work`,
+          label: 'Quản lí hồ sơ',
+          separator: false,
+          link: "/application/management",
+          name: "Application Management"
+        },
       ]
 
     }
