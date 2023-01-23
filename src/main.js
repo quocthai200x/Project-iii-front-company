@@ -17,6 +17,30 @@ import langVi from 'quasar/lang/vi'
 
 
 const myApp = createApp(App)
+
+moment.updateLocale('en', {
+    relativeTime : {
+        future: "trong %s giây",
+        past:   "%s trước",
+        s: function (number, withoutSuffix, key, isFuture){
+            return '00:' + (number<10 ? '0':'') + number + ' phút';
+        },
+        m:  "01:00 phút",
+        mm: function (number, withoutSuffix, key, isFuture){
+            return (number<10 ? '0':'') + number + ':00' + ' phút';
+        },
+        h:  "1 giờ",
+        hh: "%d giờ",
+        d:  "1 ngày",
+        dd: "%d ngày",
+        M:  "1 tháng",
+        MM: "%d tháng",
+        y:  "1 năm",
+        yy: "%d năm"
+    }
+});
+
+
 myApp.config.globalProperties.$moment = moment
 myApp.use(VueGoogleMaps, {
     load: {

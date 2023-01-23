@@ -1,5 +1,22 @@
 import axios from "@/axios"
 
+
+export const getOne = async ({id}) =>{
+    try {
+        let res = await axios.get(`/application?applicationId=${id}`)
+        if(res.status == 200){
+            return res.data 
+        }else{
+            throw new Error(res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
 export const getApplicationByJobName = async ({jobName}) =>{
     try {
         let res = await axios.get(`/application/by-job-name?jobName=${jobName}`)

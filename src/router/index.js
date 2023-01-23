@@ -56,6 +56,11 @@ const routes = [
       name: "Application Management",
       component: () => import("../views/Application/ApplicationManagement/ApplicationManagement.vue"),
     },
+    {
+      path: "/application/detail",
+      name: "Application Management - Detail",
+      component: () => import("../views/Application/ApplicationManagement/ApplicationDetails.vue"),
+    },
  
    
 

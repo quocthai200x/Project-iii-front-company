@@ -174,7 +174,7 @@ export default {
           name: "Job Management"
         },
         {
-          icon: `work`,
+          icon: `folder_shared`,
           label: 'Quản lí hồ sơ',
           separator: false,
           link: "/application/management",
