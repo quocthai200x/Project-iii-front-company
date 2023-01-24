@@ -1,33 +1,36 @@
 <template>
     <q-card flat class="q-pa-md">
-            <div class=" z-index-999">
-                <div class="q-gutter-xs">
-                    <q-select style="width: 300px;" dense color="deep-orange" outlined v-model="statusSelected"
-                        :options="optionsStatus">
-                        <template v-slot:option="scope">
-                            <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
-                                <q-item-section>
-                                    <q-item-label v-html="scope.opt.label"></q-item-label>
-                                    <!-- <q-item-label caption>{{ scope.opt.description }}</q-item-label> -->
-                                </q-item-section>
-                                <q-item-section avatar>
-                                    <q-chip v-if="scope.opt.icon != 0" color="red-6" size="12px" text-color="white"
-                                        :label="scope.opt.icon">
-                                        <!-- <q-avatar color="red" text-color="white">{{}}</q-avatar> -->
+        <q-card-section class="row">
+            <div class="text-bold  text-h6">Danh sách công việc </div>
+        </q-card-section>
+        <div class=" z-index-999">
+            <div class="q-gutter-xs">
+                <q-select style="width: 300px;" dense color="deep-orange" outlined v-model="statusSelected"
+                    :options="optionsStatus">
+                    <template v-slot:option="scope">
+                        <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+                            <q-item-section>
+                                <q-item-label v-html="scope.opt.label"></q-item-label>
+                                <!-- <q-item-label caption>{{ scope.opt.description }}</q-item-label> -->
+                            </q-item-section>
+                            <q-item-section avatar>
+                                <q-chip v-if="scope.opt.icon != 0" color="red-6" size="12px" text-color="white"
+                                    :label="scope.opt.icon">
+                                    <!-- <q-avatar color="red" text-color="white">{{}}</q-avatar> -->
 
-                                    </q-chip>
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-select>
-                </div>
+                                </q-chip>
+                            </q-item-section>
+                        </q-item>
+                    </template>
+                </q-select>
             </div>
-            <div class="margin-top-negative">
-                <router-view>
+        </div>
+        <q-card-section class="margin-top-negative">
+            <router-view>
 
-                </router-view>
-            </div>
-       
+            </router-view>
+        </q-card-section>
+
     </q-card>
 </template>
 <script>
@@ -152,8 +155,11 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: end;
-};
-.margin-top-negative{
+}
+
+;
+
+.margin-top-negative {
     margin-top: -40px;
 }
 </style>

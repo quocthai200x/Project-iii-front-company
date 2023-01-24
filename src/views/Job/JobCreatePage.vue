@@ -1,8 +1,9 @@
 <template >
-    <div>
+    <q-card flat class="q-pa-md">
         <div v-if="!roleStore.settings.recruitmentFunction.canWrite" class="text-caption text-capitalize text-negative">
             <i>** Bạn không có quyền thêm công việc</i>
         </div>
+  
         <q-stepper header-class="my-special-header-stepper" transition-next="fade" transition-prev="fade"
             transition-duration="300" flat v-model="step" ref="stepper" animated active-color="negative">
             <q-step :name="1" prefix="1" title="Chỉnh sửa việc làm">
@@ -185,7 +186,7 @@
         </q-dialog>
         <DialogAddressVue v-model:isShowAddAddress="isShowAddAddress" v-model:isShowEditAddress="isShowEditAddress"
             v-model:indexToDialog="indexToDialog"></DialogAddressVue>
-    </div>
+    </q-card>
 </template>
 <script>
 import DrawerVue from '../../layouts/Drawer.vue'

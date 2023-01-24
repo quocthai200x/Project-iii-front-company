@@ -1,6 +1,14 @@
 <template >
-    <div>
-        <div class="row justify-between ">
+    <div v-if="!roleStore.settings.applierFunction.canRead" class="text-caption text-capitalize text-negative"><i>**
+            Bạn không có quyền đọc thông tin</i></div>
+    <div v-if="!roleStore.settings.applierFunction.canWrite" class="text-caption text-capitalize text-negative"><i>**
+            Bạn không có quyền sửa thông tin</i></div>
+    <q-card flat class="q-pa-md">
+        <q-card-section class="row">
+            <div class="text-bold  text-h6">Danh sách ứng tuyển </div>
+        </q-card-section>
+
+        <q-card-section class="row justify-between ">
             <div>
 
                 <q-select style="width: 300px;" dense color="deep-orange" outlined v-model="jobSelected"
@@ -19,9 +27,9 @@
                     :options="listRecruimentStatusOfJob">
                 </q-select>
             </div>
-        </div>
+        </q-card-section>
 
-        <div class="q-pt-lg">
+        <q-card-section class="q-pt-lg">
             <q-table :pagination="myInitialPagination" :filter="filter" separator="vertical" flat
                 :rows="listApplicationShow" :columns="columns" row-key="name">
                 <template v-slot:header="props">
@@ -106,14 +114,15 @@
                     </q-tr>
                 </template>
             </q-table>
-        </div>
-    </div>
+        </q-card-section>
+    </q-card>
 </template>
 <script>
 import { getApplicationByJobName } from '../../../apis/application';
 import { getJobsNameOfCompany } from '../../../apis/job';
 import { applicationDictionary } from "../../../assets/dictionary/application"
 import Drawer from '../../../layouts/Drawer.vue';
+import { useRoleStore } from '../../../stores/roleStore';
 
 export default {
 
@@ -174,6 +183,7 @@ export default {
 
         ]
         return {
+            roleStore: useRoleStore(),
             filter: "",
             columns,
             myInitialPagination: {
@@ -225,9 +235,10 @@ export default {
             this.listApplicationShow = this.listApplication.filter(element => {
                 if (element.status.name == newValue) {
                     return element
-                } else if (element.status.note.name == newValue) {
-
-                    return element
+                } else if (element.status.note) {
+                    if (element.status.note.name == newValue) {
+                        return element
+                    }
                 } else if (newValue == "Tất cả") {
                     return element
                 }
@@ -249,11 +260,13 @@ export default {
     },
     created() {
         this.$emit("update:layout", Drawer)
-        this.init();
+        if(this.roleStore.settings.applierFunction.canRead){
+            this.init();
+        }
 
     },
     methods: {
-        init() {
+        init(){
             getJobsNameOfCompany().then(data => {
                 if (data) {
                     data.forEach(element => {
