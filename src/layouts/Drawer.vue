@@ -180,6 +180,20 @@ export default {
           link: "/application/management",
           name: "Application Management"
         },
+        {
+          icon: `settings`,
+          label: 'Quản lí phân quyền',
+          separator: false,
+          link: "/role/management",
+          name: "Role Management"
+        },
+        {
+          icon: `people`,
+          label: 'Quản lí nhân viên',
+          separator: false,
+          link: "/employee/management",
+          name: "Employee Management"
+        },
       ]
 
     }

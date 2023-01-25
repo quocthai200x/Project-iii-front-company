@@ -61,6 +61,16 @@ const routes = [
       name: "Application Management - Detail",
       component: () => import("../views/Application/ApplicationManagement/ApplicationDetails.vue"),
     },
+    {
+      path: "/role/management",
+      name: "Role Management",
+      component: () => import("../views/Role/RoleManagement.vue"),
+    },
+    {
+      path: "/employee/management",
+      name: "Employee Management",
+      component: () => import("../views/Employee/EmployeeManagement.vue"),
+    },
  
    
 

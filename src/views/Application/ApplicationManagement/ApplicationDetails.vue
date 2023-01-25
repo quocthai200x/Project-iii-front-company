@@ -35,6 +35,12 @@
                         <div class="">
                             <span>{{ "Thời gian ứng tuyển: " + $moment((application.createdAt)).fromNow() }}</span>
                         </div>
+                        <div v-if="application.candidateComment" class="row">
+
+                            <q-rating disable v-model="application.candidateComment.rate" :max="5" size="32px" />
+
+                            <div>{{ application.candidateComment.content }}</div>
+                        </div>
                     </div>
                     <!-- {{ application.candidateId.info }} -->
                 </div>
@@ -88,6 +94,18 @@
                                 <span>{{ "Từ chối: " + countRejectByUser }}</span>
                             </div>
                         </div>
+                        <div>
+                            <div v-if="application.companyComment" class="q-mt-md ">
+                                <div>Ý kiến của công ty về ứng viên: </div>
+                                <div>
+
+                                    <q-rating disable v-model="application.companyComment.rate" :max="5" size="16px" />
+                                </div>
+
+                                <div class="text-italic">{{ application.companyComment.content }}</div>
+                            </div>
+
+                        </div>
                     </div>
                     <!-- {{ application.jobId.info }} -->
                 </div>
@@ -115,17 +133,44 @@
             </div>
 
         </q-card-section>
+        <q-card-section v-if="!loading" class="row justify-center">
+            <div style="width: 80%" v-if="!application.companyComment && (application.status.value >= 4)">
+                                <q-btn @click="prompt=true" class="fit" color="negative" outline
+                                label="Đánh giá ứng viên"></q-btn>
+                            </div>
+        </q-card-section>
     </q-card>
 
-    <q-dialog   v-model="popUpCandidateInfo">
+    <q-dialog v-model="popUpCandidateInfo">
         <div v-if="!loading">
             <CandidateCVVue :candidateDetail="application.candidateId.info"></CandidateCVVue>
         </div>
     </q-dialog>
+    <q-dialog v-model="prompt" persistent>
+            <q-card style="min-width: 350px">
+                <q-card-section>
+                    <div class="text-h6">Hãy nêu ý kiến của bạn</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <div>
+                        <q-rating v-model="rating" :max="5" size="32px" />
+                    </div>
+                    <div  style="max-width: 400px; max-height: 600px">
+                        <q-input maxlength="600" autogrow color="negative" dense v-model="comment" autofocus />
+                    </div>
+                </q-card-section>
+
+                <q-card-actions align="right" class="text-negative">
+                    <q-btn flat label="Đóng" v-close-popup />
+                    <q-btn flat label="Thêm" v-close-popup @click="addComment" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
 </template>
 <script>
 import Drawer from '../../../layouts/Drawer.vue';
-import { approveByCompany, changeStatusApplication, getOne, rejectByCompany } from "../../../apis/application"
+import { approveByCompany, changeStatusApplication, companyComment, getOne, rejectByCompany } from "../../../apis/application"
 import { useCompanyStore } from '../../../stores/companyStore';
 import { applicationDictionary } from '../../../assets/dictionary/application';
 import CandidateCVVue from '../../../components/Candidate/CandidateCV.vue';
@@ -137,13 +182,16 @@ export default {
     },
     created() {
         this.$emit("update:layout", Drawer)
-        if(this.roleStore.settings.applierFunction.canRead){
+        if (this.roleStore.settings.applierFunction.canRead) {
             this.init();
         }
-      
+
     },
     data() {
         return {
+            prompt:false,
+            comment: "",
+            rating: 3,
             roleStore: useRoleStore(),
             popUpCandidateInfo: false,
             loading: true,
@@ -185,6 +233,38 @@ export default {
         }
     },
     methods: {
+        addComment(){
+            companyComment({
+                comment:{
+                    rate: this.rating,
+                    content: this.comment
+                },
+                id: this.application._id
+            }).then(data=>{
+                if(data){
+                   
+                    this.application.companyComment = {
+                        content: this.comment,
+                        rate: this.rating,
+                    }
+                    this.$q.notify({
+                        message: "Ý kiến thành công",
+                        color: 'green-6',
+                        position: "bottom-right",
+                        icon: 'check_circle',
+                    })
+                    this.rating = 3
+                    this.comment = ""
+                }else{
+                    this.$q.notify({
+                        message: 'Thất bại',
+                        color: 'deep-orange-6',
+                        position: "bottom-right",
+                        icon: 'check_circle',
+                    })
+                }
+            })
+        },
         continueInterview(index) {
             changeStatusApplication({ id: this.application._id, type: "continue-interview", interviewIndex: index }).then(data => {
                 if (data) {
@@ -238,8 +318,6 @@ export default {
             let applicationId = this.$route.query.id;
             getOne({ id: applicationId }).then(data => {
                 if (data) {
-
-
                     this.countTurnIn = data.countTurnIn
                     this.countApprove = data.countApprove
                     this.countInterview = data.countInterview
@@ -247,10 +325,8 @@ export default {
                     this.countGetHired = data.countGetHired
                     this.countRejectByUser = data.countRejectByUser
                     this.countNotQualify = data.countNotQualify
-
                     this.application = data.data
                 } else {
-
                 }
                 this.loading = false;
                 // console.log(this.application)
@@ -327,7 +403,7 @@ export default {
             this.optionSelect.push({
                 name: "Đậu hồ sơ",
                 value: applicationDictionary.status.approve.value,
-                inactive:  !(applicationDictionary.created.isUser(this.application.createdBy) && this.application.status.value == applicationDictionary.status.turnIn.value)
+                inactive: !(applicationDictionary.created.isUser(this.application.createdBy) && this.application.status.value == applicationDictionary.status.turnIn.value)
             })
             // các nút interview
             // console.log(this.application.jobId)
@@ -365,9 +441,9 @@ export default {
                 value: applicationDictionary.status.notQualify.value,
                 inactive: this.application.status.value >= 4
             })
-        
-            if(!this.roleStore.settings.applierFunction.canWrite){
-                this.optionSelect.forEach(element=>{
+
+            if (!this.roleStore.settings.applierFunction.canWrite) {
+                this.optionSelect.forEach(element => {
                     element.inactive = true;
                 })
             }
@@ -377,7 +453,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    .hover-text:hover {
+.hover-text:hover {
     color: $deep-orange;
     transition: ease-in-out 200ms;
 }
