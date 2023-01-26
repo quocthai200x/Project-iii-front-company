@@ -52,9 +52,9 @@ export const searchJob = async ({text, filter, pageNumber, limit}) =>{
 
 
 
-export const searchCandidate = async ({text, filter}) =>{
+export const searchCandidate = async ({text, filter, pageNumber,limit}) =>{
     try {
-        let res = await axios.post('/search/candidate', {
+        let res = await axios.post(`/search/candidate?pageNumber=${pageNumber}&limit=${limit}`, {
             text, filter
         })        
         if(res.status == 200){

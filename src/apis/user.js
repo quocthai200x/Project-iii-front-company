@@ -26,6 +26,20 @@ export const getAllEmailCompany = async () => {
     }
 }
 
+export const getCandidate = async ({userId}) => {
+    try {
+        let res = await axios.get(`/user/candidate/${userId}`)
+        if (res.status == 200) {
+            return res.data
+        } else {
+            throw new Error(res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export const getAllEmployeeOfCompany = async () => {
     try {
         let res = await axios.get('/user/employee')
@@ -54,6 +68,8 @@ export const updateUserInfo = async (data) => {
         console.log(error)
     }
 }
+
+
 
 export const attachRole = async ({ targetEmail, roleName }) => {
     try {

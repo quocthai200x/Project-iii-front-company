@@ -71,6 +71,16 @@ const routes = [
       name: "Employee Management",
       component: () => import("../views/Employee/EmployeeManagement.vue"),
     },
+    {
+      path: "/candidate/detail",
+      name: "Candidate Detail",
+      component: () => import("../views/Candidate/CandidateProfile.vue"),
+    },
+    {
+      path: "/candidate/search",
+      name: "Candidate Search",
+      component: () => import("../views/Candidate/SearchCandidate.vue"),
+    },
  
    
 

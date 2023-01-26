@@ -194,6 +194,13 @@ export default {
           link: "/employee/management",
           name: "Employee Management"
         },
+               {
+          icon: `search`,
+          label: 'Tìm kiếm ứng viên',
+          separator: false,
+          link: "/candidate/search",
+          name: "Candidate"
+        },
       ]
 
     }
