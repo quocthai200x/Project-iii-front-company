@@ -161,7 +161,7 @@ export default {
             this.countJobByStatus.draft.value = getCounts.draft;
             this.countJobByStatus.expiredIn7days.value = getCounts.expiredIn7days;
             this.countJobByStatus.show.value = getCounts.show;
-            this.countJobByStatus.hidden.value = getCounts.draft;
+            this.countJobByStatus.hidden.value = getCounts.hidden;
 
             // console.log(countJobByStatus)
         },

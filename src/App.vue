@@ -47,7 +47,7 @@ export default {
           if (roleDictionary.isAdmin(roleNumber)) {
             this.roleStore.setAdminRole()
           } else if (roleDictionary.isEmployee(roleNumber)) {
-            this.roleStore.setState(user.user.roleId);
+            this.roleStore.setState(data.user.roleId);
           }
 
         } else {

@@ -140,11 +140,13 @@ import { useUserStore } from '../../stores/userStore';
 import { useCompanyStore } from '../../stores/companyStore';
 import { useRoleStore } from "../../stores/roleStore"
 import LayoutFakeVue from '../../layouts/LayoutFake.vue';
+import { useJobStore } from '../../stores/jobStore';
 
 
 export default {
     data() {
         return {
+            jobStore: useJobStore(),
             slide: ref(1),
             autoplay: ref(true),
             email: "",
@@ -157,8 +159,8 @@ export default {
             roleStore: useRoleStore(),
         }
     },
-    created(){
-        this.$emit("update:layout",LayoutFakeVue)
+    created() {
+        this.$emit("update:layout", LayoutFakeVue)
     },
     methods: {
         submitLogin() {
@@ -172,8 +174,8 @@ export default {
                                     let { email, _id, info, activity, roleNumber, createdAt, updatedAt } = user.user
                                     if (roleDictionary.isAdmin(roleNumber) || roleDictionary.isEmployee(roleNumber)) {
                                         this.userStore.setState({ email, _id, info, activity, roleNumber, createdAt, updatedAt })
-                                       
-                                        this.companyStore.setState(user.user.companyId)
+                                        this.companyStore.setState(user.user.companyId);
+                                        this.jobStore.form.benefits = user.user.companyId.info.benefits;
                                         if (roleDictionary.isAdmin(roleNumber)) {
                                             this.roleStore.setAdminRole()
                                         } else if (roleDictionary.isEmployee(roleNumber)) {
