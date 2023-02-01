@@ -39,7 +39,7 @@ import { getCountJobByStatus } from "../../../apis/job"
 export default {
     watch: {
         "statusSelected"(newValue, oldValue) {
-            // console.log(newValue)
+            console.log(newValue)
             if (newValue.value != oldValue.value) {
                 if (newValue.value == this.optionsStatus[0].value) {
                     this.$router.push("/job/management/show")
@@ -56,7 +56,7 @@ export default {
             }
         },
         "$route.name"(newValue) {
-
+            
             if (newValue.includes("Show")) {
                 this.statusSelected = this.optionsStatus[0]
             }
