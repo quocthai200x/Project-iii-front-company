@@ -37,13 +37,7 @@ export const login = async ({ email, password }) => {
 
 export const logout = async () => {
     try {
-        let res = await axios.post('/auth/logout')
-        // console.log(res)
-        if (res.status == 200) {
-            return res.data
-        } else {
-            throw new Error(res.data.code)
-        }
+        axios.defaults.headers.common['Authorization'] = "";
     } catch (error) {
         console.log(error)
     }

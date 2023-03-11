@@ -84,6 +84,8 @@ import { useCompanyStore } from "../stores/companyStore"
 
 import { logout } from "@/apis/auth"
 import Footer from "./Footer.vue"
+import { useJobStore } from '../stores/jobStore'
+import { useRoleStore } from '../stores/roleStore'
 
 export default {
   components: {
@@ -96,8 +98,11 @@ export default {
       menuList: [],
       link: this.$route.name,
       searchStore: useSearchStore(),
+      jobStore: useJobStore(),
+      roleStore: useRoleStore(),
       userStore: useUserStore(),
       companyStore: useCompanyStore(),
+      searchStore: useSearchStore(),
       navigateHeader: [
         {
           label: "Trang chủ",
@@ -135,6 +140,13 @@ export default {
         //   if (data) {
         localStorage.removeItem("session")
         this.userStore.$reset();
+        this.jobStore.$reset()
+        this.roleStore.$reset()
+        this.companyStore.$reset()
+        this.searchStore.$reset()
+        logout()
+        this.$router.push('/dang-nhap')
+        
         // }
         // })
       } else {
@@ -197,9 +209,16 @@ export default {
                {
           icon: `search`,
           label: 'Tìm kiếm ứng viên',
-          separator: false,
+          separator: true,
           link: "/candidate/search",
           name: "Candidate"
+        },
+        {
+          icon: `logout`,
+          label: 'Đăng xuất',
+          separator: false,
+          link: "logout",
+          name: "Log out"
         },
       ]
 

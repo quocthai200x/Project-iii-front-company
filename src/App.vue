@@ -29,16 +29,26 @@ export default {
       companyStore: useCompanyStore(), 
       roleStore: useRoleStore(),
       jobStore: useJobStore(),
+      listNotCheck: ["/dang-ki",'/dang-nhap'],
+      
     }
   },
   async created() {
-    await this.checkUserExisted();
+    setTimeout(()=>{console.log(this.$route)},0)
+    // console.log(this.$route)
+    if(this.listNotCheck.includes(this.$route.path)){
+      this.canLoadComponent = true
+    }else{
+      await this.checkUserExisted();
+    }
   },
 
   methods: {
     async checkUserExisted() {
       const data = await getMe()
+     
       if (data) {
+
         let { email, _id, info, activity, roleNumber, createdAt, updatedAt, } = data.user;
         if (data && (roleDictionary.isAdmin(roleNumber) || roleDictionary.isEmployee(roleNumber))) {
           this.userStore.setState({ email, _id, info, activity, roleNumber, createdAt, updatedAt })
@@ -64,6 +74,8 @@ export default {
 } 
 </script>
 <style lang="scss">
-
+#app{
+  background: white;
+}
 </style>
   

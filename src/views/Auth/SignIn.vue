@@ -123,9 +123,28 @@
                         </div>
 
                     </div>
-                    <div class="float-right	">
-                        <q-btn :disable="loading" unelevated label="Đăng nhập" color="negative"
-                            @click="submitLogin"></q-btn>
+
+                    <div class=" float-right ">
+                        <div class="flex column q-gutter-md">
+
+                            <div class="flex justify-end">
+
+                                <q-btn :disable="loading" unelevated label="Đăng nhập" color="negative"
+                                @click="submitLogin"></q-btn>
+                                
+                            </div>
+                            <div>
+
+                                <span>
+                                    Chưa có tài khoản?
+                                </span>
+                                <router-link to="/dang-ki">
+                                    <span class="hover text-bold">
+                                        Đăng kí ngay
+                                    </span>
+                                </router-link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,5 +254,10 @@ export default {
 
 .btn-non-active {
     color: rgba(0, 0, 0, 1);
+}
+
+.hover:hover{
+    color: $negative;
+    transition: ease-in-out 200ms ;
 }
 </style>

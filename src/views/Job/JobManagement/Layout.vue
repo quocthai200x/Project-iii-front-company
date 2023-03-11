@@ -3,20 +3,19 @@
         <q-card-section class="row">
             <div class="text-bold  text-h6">Danh sách công việc </div>
         </q-card-section>
-        <div class=" z-index-999">
-            <div class="q-gutter-xs">
-                <q-select style="width: 300px;" dense color="deep-orange" outlined v-model="statusSelected"
+        <div class="row justify-end q-mx-md">
+            <div class="q-gutter-xs ">
+                <q-select class="z-index-999" style="width: 300px;" dense color="deep-orange" outlined v-model="statusSelected"
                     :options="optionsStatus">
                     <template v-slot:option="scope">
                         <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                             <q-item-section>
                                 <q-item-label v-html="scope.opt.label"></q-item-label>
-                                <!-- <q-item-label caption>{{ scope.opt.description }}</q-item-label> -->
+                             
                             </q-item-section>
                             <q-item-section avatar>
                                 <q-chip v-if="scope.opt.icon != 0" color="red-6" size="12px" text-color="white"
                                     :label="scope.opt.icon">
-                                    <!-- <q-avatar color="red" text-color="white">{{}}</q-avatar> -->
 
                                 </q-chip>
                             </q-item-section>
@@ -157,9 +156,11 @@ export default {
     justify-content: end;
 }
 
-;
+// .z-index-999{
+//     z-index: 999;
+// }
 
-.margin-top-negative {
-    margin-top: -40px;
-}
+// .margin-top-negative {
+//     margin-top: -40px;
+// }
 </style>

@@ -197,7 +197,9 @@ export default {
                     longitude: this.longitude,
                 }
                 if (this.isHeadquarter) {
-                    this.companyStore.info.location[0].isHeadquarter = false;
+                    if(this.companyStore.info.location.length>0){
+                        this.companyStore.info.location[0].isHeadquarter = false;
+                    }
                 }
                 this.companyStore.info.location.unshift(objectLocation)
                 this.resetData();

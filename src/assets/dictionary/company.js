@@ -16,10 +16,7 @@ export const companyDictionary = {
             label: "50-100",
             value: 4,
         },
-        {
-            label: "50-100",
-            value: 4,
-        },
+   
         {
             label: "100-500",
             value: 5,

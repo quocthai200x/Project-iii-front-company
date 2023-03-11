@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="">
 
         <q-input style="width: 300px;" v-model="filter" color="deep-orange" outlined dense placeholder="Tìm theo tên">
             <template v-slot:prepend>
@@ -359,5 +359,8 @@ export default {
 .hover-text:hover {
     color: $deep-orange;
     transition: ease-in-out 200ms;
+}
+.marginY-XL{
+    // margin-top: -;
 }
 </style>

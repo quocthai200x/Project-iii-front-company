@@ -89,7 +89,6 @@
 </template>
 <script>
 
-import { useQuasar } from 'quasar'
 import { jobDictionary } from '../../assets/dictionary/job';
 import { useCompanyStore } from '../../stores/companyStore';
 import { iconDictionary } from "../../assets/dictionary/icon"
