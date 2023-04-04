@@ -1,4 +1,5 @@
 <template >
+    
     <div v-if="!roleStore.settings.applierFunction.canRead" class="text-caption text-capitalize text-negative"><i>**
             Bạn không có quyền đọc thông tin</i></div>
     <div v-if="!roleStore.settings.applierFunction.canWrite" class="text-caption text-capitalize text-negative"><i>**
@@ -20,7 +21,7 @@
                         <div class="text-capitalize text-bold text-subtitle1 q-mb-md">
                             <span class="cursor-pointer hover-text" @click="popUpCandidateInfo = true">{{
                                 "Ứng viên: " +
-                                    application.candidateId.info.name
+                                application.candidateId.info.name
                             }}</span>
                         </div>
                         <div class="">
@@ -46,7 +47,7 @@
                 </div>
                 <div class="row no-wrap q-gutter-md">
                     <q-avatar size="100px">
-                        <img :src="companyStore.info.logo ? companyStore.info.logo : '@/assets/images/logo.png'" />
+                        <img :src="companyStore.info.logo ? companyStore.info.logo : Logo" />
                     </q-avatar>
                     <div class="">
                         <div class="text-capitalize text-bold text-subtitle1 q-mb-md">
@@ -59,13 +60,13 @@
                             <span>{{ "Trình độ công việc: " + application.jobId.info.level.name }}</span>
                         </div>
                         <div class="">
-                            <span>{{ "Nơi làm việc: "}}</span>
+                            <span>{{ "Nơi làm việc: " }}</span>
                             <ul class="q-mt-xs">
                                 <li v-for="(location, index ) in application.jobId.info.workingAddress" :key="index">
                                     <span class="text-capitalize text-caption">
                                         {{
                                             location.address + ", " + location.ward + ", " + location.district + ", " +
-                                                location.province
+                                            location.province
                                         }}
                                     </span>
                                 </li>
@@ -112,9 +113,9 @@
             </div>
             <div class="col-4">
                 <div>
-                    <q-select dense v-model="selectAction" :options="optionSelect" option-value="value"
-                        option-label="name" option-disable="inactive" emit-value map-options outlined
-                        color="deep-orange" style="min-width: 250px; max-width: 300px" />
+                    <q-select dense v-model="selectAction" :options="optionSelect" option-value="value" option-label="name"
+                        option-disable="inactive" emit-value map-options outlined color="deep-orange"
+                        style="min-width: 250px; max-width: 300px" />
                 </div>
                 <div class="q-mt-md">
                     <span>
@@ -123,10 +124,10 @@
                     <span>
                         {{
                             this.application.status.value == 2
-                                && this.application.jobId.info.recruitmentProcess.length > 0 ?
-                                this.application.status.note.name
-                                :
-                                this.application.status.name
+                            && this.application.jobId.info.recruitmentProcess.length > 0 ?
+                            this.application.status.note.name
+                            :
+                            this.application.status.name
                         }}
                     </span>
                 </div>
@@ -135,9 +136,8 @@
         </q-card-section>
         <q-card-section v-if="!loading" class="row justify-center">
             <div style="width: 80%" v-if="!application.companyComment && (application.status.value >= 4)">
-                                <q-btn @click="prompt=true" class="fit" color="negative" outline
-                                label="Đánh giá ứng viên"></q-btn>
-                            </div>
+                <q-btn @click="prompt = true" class="fit" color="negative" outline label="Đánh giá ứng viên"></q-btn>
+            </div>
         </q-card-section>
     </q-card>
 
@@ -147,27 +147,28 @@
         </div>
     </q-dialog>
     <q-dialog v-model="prompt" persistent>
-            <q-card style="min-width: 350px">
-                <q-card-section>
-                    <div class="text-h6">Hãy nêu ý kiến của bạn</div>
-                </q-card-section>
+        <q-card style="min-width: 350px">
+            <q-card-section>
+                <div class="text-h6">Hãy nêu ý kiến của bạn</div>
+            </q-card-section>
 
-                <q-card-section class="q-pt-none">
-                    <div>
-                        <q-rating v-model="rating" :max="5" size="32px" />
-                    </div>
-                    <div  style="max-width: 400px; max-height: 600px">
-                        <q-input maxlength="600" autogrow color="negative" dense v-model="comment" autofocus />
-                    </div>
-                </q-card-section>
+            <q-card-section class="q-pt-none">
+                <div>
+                    <q-rating v-model="rating" :max="5" size="32px" />
+                </div>
+                <div style="max-width: 400px; max-height: 600px">
+                    <q-input maxlength="600" autogrow color="negative" dense v-model="comment" autofocus />
+                </div>
+            </q-card-section>
 
-                <q-card-actions align="right" class="text-negative">
-                    <q-btn flat label="Đóng" v-close-popup />
-                    <q-btn flat label="Thêm" v-close-popup @click="addComment" />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
+            <q-card-actions align="right" class="text-negative">
+                <q-btn flat label="Đóng" v-close-popup />
+                <q-btn flat label="Thêm" v-close-popup @click="addComment" />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
 </template>
+
 <script>
 import Drawer from '../../../layouts/Drawer.vue';
 import { approveByCompany, changeStatusApplication, companyComment, getOne, rejectByCompany } from "../../../apis/application"
@@ -175,7 +176,7 @@ import { useCompanyStore } from '../../../stores/companyStore';
 import { applicationDictionary } from '../../../assets/dictionary/application';
 import CandidateCVVue from '../../../components/Candidate/CandidateCV.vue';
 import { useRoleStore } from '../../../stores/roleStore';
-
+import Logo from "../../../assets/images/logo.png"
 export default {
     components: {
         CandidateCVVue,
@@ -189,7 +190,8 @@ export default {
     },
     data() {
         return {
-            prompt:false,
+            Logo: Logo,
+            prompt: false,
             comment: "",
             rating: 3,
             roleStore: useRoleStore(),
@@ -233,16 +235,16 @@ export default {
         }
     },
     methods: {
-        addComment(){
+        addComment() {
             companyComment({
-                comment:{
+                comment: {
                     rate: this.rating,
                     content: this.comment
                 },
                 id: this.application._id
-            }).then(data=>{
-                if(data){
-                   
+            }).then(data => {
+                if (data) {
+
                     this.application.companyComment = {
                         content: this.comment,
                         rate: this.rating,
@@ -255,7 +257,7 @@ export default {
                     })
                     this.rating = 3
                     this.comment = ""
-                }else{
+                } else {
                     this.$q.notify({
                         message: 'Thất bại',
                         color: 'deep-orange-6',

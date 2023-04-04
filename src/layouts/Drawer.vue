@@ -6,7 +6,7 @@
         <q-toolbar-title class="col-2">
           <router-link to="/">
             <div class="row items-center q-gutter-xs">
-              <q-img width="60px" src="@/assets/images/just_logo.png"></q-img>
+              <q-img width="60px" :src="JustLogo"></q-img>
 
               <div class=" text-weight-medium">
                 <span>Thaiwork</span>
@@ -86,13 +86,14 @@ import { logout } from "@/apis/auth"
 import Footer from "./Footer.vue"
 import { useJobStore } from '../stores/jobStore'
 import { useRoleStore } from '../stores/roleStore'
-
+import JustLogo from '../assets/images/just_logo.png'
 export default {
   components: {
     Footer,
   },
   data() {
     return {
+      JustLogo: JustLogo,
       drawer: false,
       miniState: true,
       menuList: [],

@@ -46,7 +46,7 @@
                                             <q-img width="100%" :ratio="1" :src="candidate.info.avatar" />
                                         </q-avatar>
                                         <q-avatar v-else class="fit">
-                                            <q-img width="100%" :ratio="1" src="@/assets/images/avatar-default.jpg" />
+                                            <q-img width="100%" :ratio="1" :src="DefaultAvatar" />
                                         </q-avatar>
                                     </div>
                                 </div>
@@ -108,10 +108,11 @@ import DrawerVue from '../../layouts/Drawer.vue'
 import { getCountJobByStatus } from "../../apis/job"
 import { suggestCandidate } from "../../apis/search"
 import { ref } from 'vue'
-
+import DefaultAvatar from "../../assets/images/avatar-default.jpg"
 export default {
     data() {
         return {
+            DefaultAvatar: DefaultAvatar,
             countJobByStatus: {
                 draft: {
                     value: 0,

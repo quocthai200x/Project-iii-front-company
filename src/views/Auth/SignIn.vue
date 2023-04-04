@@ -7,7 +7,7 @@
                 <div class="flex justify-center items-center">
 
                     <div class="q-mb-xl">
-                        <q-img width="200px" src="@/assets/images/logo.png"></q-img>
+                        <q-img width="200px" :src="Logo"></q-img>
                     </div>
                     <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" swipeable
                         animated infinite :autoplay="autoplay" control-color="white" navigation padding height="500px"
@@ -23,7 +23,7 @@
                             <div class="block justify-center items-center q-mb-md ">
                                 <div class="flex justify-center items-center q-mb-md">
                                     <q-img class="rounded-borders" rounded-borders fit="fill" :ratio="16 / 9"
-                                        width="200px" src="@/assets/images/login_banner_1.png"></q-img>
+                                        width="200px" :src="LoginBanner1"></q-img>
                                 </div>
                                 <div class="text-center text-subtitle2">
                                     <span>Giọng nói thành Văn bản</span>
@@ -37,7 +37,7 @@
                             <div class="block justify-center items-center  q-mb-md ">
                                 <div class="flex justify-center items-center q-mb-md">
                                     <q-img class="rounded-borders" rounded-borders fit="fill" :ratio="16 / 9"
-                                        width="200px" src="@/assets/images/login_banner_2.png"></q-img>
+                                        width="200px" :src="LoginBanner2"></q-img>
                                 </div>
                                 <div class="text-center text-subtitle2">
                                     <span>Tất cả CV tại 1 nơi</span>
@@ -54,7 +54,7 @@
                             <div class="block justify-center items-center q-mb-md ">
                                 <div class="flex justify-center items-center q-mb-md">
                                     <q-img class="rounded-borders" rounded-borders fit="fill" :ratio="16 / 9"
-                                        width="200px" src="@/assets/images/login_banner_3.png"></q-img>
+                                        width="200px" :src="LoginBanner3"></q-img>
                                 </div>
                                 <div class="text-center text-subtitle2">
                                     <span>Đánh giá và So sánh</span>
@@ -69,7 +69,7 @@
                             <div class="block justify-center items-center  q-mb-md ">
                                 <div class="flex justify-center items-center q-mb-md">
                                     <q-img class="rounded-borders" rounded-borders fit="fill" :ratio="16 / 9"
-                                        width="200px" src="@/assets/images/login_banner_4.png"></q-img>
+                                        width="200px" :src="LoginBanner4"></q-img>
                                 </div>
                                 <div class="text-center text-subtitle2">
                                     <span>Hệ thống quản lí ứng viên</span>
@@ -160,11 +160,19 @@ import { useCompanyStore } from '../../stores/companyStore';
 import { useRoleStore } from "../../stores/roleStore"
 import LayoutFakeVue from '../../layouts/LayoutFake.vue';
 import { useJobStore } from '../../stores/jobStore';
-
-
+import LoginBanner1 from "../../assets/images/login_banner_1.png"
+import LoginBanner2 from "../../assets/images/login_banner_2.png"
+import LoginBanner3 from "../../assets/images/login_banner_3.png"
+import LoginBanner4 from "../../assets/images/login_banner_4.png"
+import Logo from "../../assets/images/logo.png"
 export default {
     data() {
         return {
+            LoginBanner1: LoginBanner1,
+            LoginBanner2: LoginBanner2,
+            LoginBanner3: LoginBanner3,
+            LoginBanner4: LoginBanner4,
+            Logo: Logo,
             jobStore: useJobStore(),
             slide: ref(1),
             autoplay: ref(true),
