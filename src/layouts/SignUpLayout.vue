@@ -5,11 +5,11 @@
     </div>
 </template>
 <script>
-import logo from "../assets/images/logo.png"
+// import logo from "../assets/images/logo.png"
 export default {
     data(){
         return{
-            logo: logo
+            // logo: logo
         }
     }
 }

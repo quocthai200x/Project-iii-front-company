@@ -224,7 +224,7 @@
                                 <div class="col-3">
                                     <q-avatar size="60px">
                                         <img style="object-fit:cover;"
-                                            :src="user.info.avatar ? user.info.avatar : avatarDefault" />
+                                            :src="user.info.avatar ? user.info.avatar : '../../../public/static/images/avatar-default.jpg'" />
                                     </q-avatar>
                                 </div>
                                 <div class="col-9">
@@ -344,7 +344,10 @@ import { getCandidate } from '../../apis/user'
 import DrawerVue from '../../layouts/Drawer.vue'
 import { useRoleStore } from '../../stores/roleStore'
 import { useSearchStore } from '../../stores/searchStore'
-import avatarDefault from "../../assets/images/avatar-default.jpg"
+
+
+
+// import avatarDefault from "../../../public/static/images/avatar-default.jpg"
 import { useQuasar } from 'quasar'
 import { invite } from '../../apis/application'
 
@@ -363,7 +366,7 @@ export default {
             listJobsName: [],
             jobSelected: "",
             popUp: false,
-            avatarDefault: avatarDefault,
+            // avatarDefault: avatarDefault,
             indexChoose: -1,
             inviteUserLoading: false,
             isInvited: false,

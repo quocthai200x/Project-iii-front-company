@@ -47,7 +47,7 @@
                 </div>
                 <div class="row no-wrap q-gutter-md">
                     <q-avatar size="100px">
-                        <img :src="companyStore.info.logo ? companyStore.info.logo : Logo" />
+                        <img :src="companyStore.info.logo ? companyStore.info.logo : '../../../../public/static/images/logo.png'" />
                     </q-avatar>
                     <div class="">
                         <div class="text-capitalize text-bold text-subtitle1 q-mb-md">
@@ -176,7 +176,8 @@ import { useCompanyStore } from '../../../stores/companyStore';
 import { applicationDictionary } from '../../../assets/dictionary/application';
 import CandidateCVVue from '../../../components/Candidate/CandidateCV.vue';
 import { useRoleStore } from '../../../stores/roleStore';
-import Logo from "../../../assets/images/logo.png"
+// import Logo from "../../../../public/static/images/logo.png"
+
 export default {
     components: {
         CandidateCVVue,
@@ -190,7 +191,7 @@ export default {
     },
     data() {
         return {
-            Logo: Logo,
+            // Logo: Logo,
             prompt: false,
             comment: "",
             rating: 3,

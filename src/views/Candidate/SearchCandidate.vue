@@ -50,7 +50,7 @@
                             <div class="col-3">
                                 <q-avatar size="80px">
                                     <img style="object-fit:cover;"
-                                        :src="user.info.avatar ? user.info.avatar : avatarDefault" />
+                                        :src="user.info.avatar ? user.info.avatar : '../../../public/static/images/avatar-default.jpg'" />
                                 </q-avatar>
                             </div>
                             <div class="col-9">
@@ -167,7 +167,9 @@ import DrawerVue from '../../layouts/Drawer.vue'
 import { useSearchStore } from "../../stores/searchStore"
 import { jobDictionary } from "../../assets/dictionary/job"
 import { provinceDictionary } from "../../assets/dictionary/location"
-import avatarDefault from "../../assets/images/avatar-default.jpg"
+// import avatarDefault from "../../../public/static/images/avatar-default.jpg"
+
+
 import { invite } from "../../apis/application"
 import { getJobsNameOfCompany } from '../../apis/job'
 import { useRoleStore } from '../../stores/roleStore'
@@ -190,7 +192,7 @@ export default {
         return {
             $q: useQuasar(),
             roleStore: useRoleStore(),
-            avatarDefault: avatarDefault,
+            // avatarDefault: avatarDefault,
             limit: 20,
             text: '',
             pageNumber: 1,
